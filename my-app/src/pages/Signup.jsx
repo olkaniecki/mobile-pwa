@@ -1,7 +1,8 @@
 import React, {useState} from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { auth } from '../firebase';
+import { doc, setDoc } from 'firebase/firestore';
+import { auth, db } from '../firebase';
 import styled from 'styled-components';
 import { Link } from "react-router-dom";
 
@@ -66,23 +67,28 @@ const Signup = () => {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
 
     const onSubmit = async (e) => {
         e.preventDefault();
 
-        await createUserWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
+        try {
+            const userCredential = await createUserWithEmailAndPassword(auth, email, password);
             const user = userCredential.user;
-            console.log(user);
-            navigate("/login");
-        })
-        .catch((error) => {
-            // TODO: error handling for password/email problems
-            const errorCode = error.code;
-            const errorMessage = error.message;
-            console.log(errorCode, errorMessage);
-        });
-    }
+
+            await setDoc(doc(db, "users", user.uid), {
+                firstName,
+                lastName,
+                email
+            });
+            console.log("User created: ", user.uid);
+            navigate("/login")
+        } catch (err) {
+            console.error(err.code, err.message);
+        }
+    };
+
 
     return (
         <main >        
@@ -90,7 +96,31 @@ const Signup = () => {
             <div>
                 <div>                  
                     <h1> Sign Up </h1>                                                                            
-                    <form>                                                                                            
+                    <form>          
+                        <div>
+                             <SignUpLabels htmlFor="first-name">
+                                First Name
+                            </SignUpLabels>   
+                            <InputBoxes
+                                type="text"
+                                label="First name"
+                                value={firstName}
+                                onChange={(e) => setFirstName(e.target.value)}  
+                                required                                    
+                                placeholder="First Name"                                
+                            />
+                            <SignUpLabels htmlFor="last-name">
+                                Last Name
+                            </SignUpLabels>   
+                            <InputBoxes
+                                type="text"
+                                label="Last name"
+                                value={lastName}
+                                onChange={(e) => setLastName(e.target.value)}  
+                                required                                    
+                                placeholder="Last Name"                                
+                            />
+                        </div>                                                                                  
                         <div>
                             <SignUpLabels htmlFor="email-address">
                                 Email
