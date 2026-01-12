@@ -2,6 +2,64 @@ import React, {useState} from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../firebase';
+import styled from 'styled-components';
+import { Link } from "react-router-dom";
+
+
+const SignupButton = styled.button`
+    background-color: #13293D;
+    color: #E8F1F2;
+    font-size: 1.5em;
+    font-weight: 500;
+    border: 1px solid transparent;
+    border-radius: 1rem;
+    padding: 3px;
+    width: 250px;
+    height: 40px;
+    text-decoration: none;
+    display: inline-block;
+    margin-top: 10px;
+    margin-bottom: 10px;
+
+    &:hover {
+        background-color: #E8F1F2;
+        color: #13293D;
+        border: 1px solid;
+        border-color: #13293D;
+    }
+
+    &:active {
+        background-color: #E8F1F2;
+        color: #13293D;
+        border: 1px solid;
+        border-color: #13293D;
+    }
+`;
+
+const LoginLink = styled(Link)`
+    color: #006494;
+`;
+
+const InputBoxes = styled.input`
+    background-color: #1b98e033;
+    color: #13293D;
+    width: 325px;
+    padding: 12px;
+    margin: 10px 0;
+    border-radius: 10px;
+    border: 1px solid transparent;
+
+    &::placeholder {
+        color: #13293D;
+        font-style: italic;
+        opacity: 0.50;
+    }
+`;
+
+const SignUpLabels = styled.label`
+    display: block;
+    text-align: left;
+`;
 
 const Signup = () => {
     const navigate = useNavigate();
@@ -31,27 +89,27 @@ const Signup = () => {
         <section>
             <div>
                 <div>                  
-                    <h1> Project26 </h1>                                                                            
+                    <h1> Sign Up </h1>                                                                            
                     <form>                                                                                            
                         <div>
-                            <label htmlFor="email-address">
-                                Email address
-                            </label>
-                            <input
+                            <SignUpLabels htmlFor="email-address">
+                                Email
+                            </SignUpLabels>
+                            <InputBoxes
                                 type="email"
                                 label="Email address"
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}  
                                 required                                    
-                                placeholder="Email address"                                
+                                placeholder="Email"                                
                             />
                         </div>
 
                         <div>
-                            <label htmlFor="password">
+                            <SignUpLabels htmlFor="password">
                                 Password
-                            </label>
-                            <input
+                            </SignUpLabels>
+                            <InputBoxes
                                 type="password"
                                 label="Create password"
                                 value={password}
@@ -61,20 +119,17 @@ const Signup = () => {
                             />
                         </div>                                             
 
-                        <button
+                        <SignupButton
                             type="submit" 
                             onClick={onSubmit}                        
                         >  
-                            Sign up                                
-                        </button>
+                            Sign Up                                
+                        </SignupButton>
 
                     </form>
 
                     <p>
-                        Already have an account?{' '}
-                        <NavLink to="/login" >
-                            Sign in
-                        </NavLink>
+                        <LoginLink to="/login">Already have an account?</LoginLink>
                     </p>                   
                 </div>
             </div>
