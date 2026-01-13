@@ -8,8 +8,8 @@ import { Link } from "react-router-dom";
 
 
 const SignupButton = styled.button`
-    background-color: #13293D;
-    color: #E8F1F2;
+    background-color: #DAD7CD;
+    color: #344E41;
     font-size: 1.5em;
     font-weight: 500;
     border: 1px solid transparent;
@@ -23,27 +23,27 @@ const SignupButton = styled.button`
     margin-bottom: 10px;
 
     &:hover {
-        background-color: #E8F1F2;
-        color: #13293D;
+        background-color: #344E41;
+        color: #DAD7CD;
         border: 1px solid;
-        border-color: #13293D;
+        border-color: #344E41;
     }
 
     &:active {
-        background-color: #E8F1F2;
-        color: #13293D;
+        background-color: #344E41;
+        color: #DAD7CD;
         border: 1px solid;
-        border-color: #13293D;
+        border-color: #344E41;
     }
 `;
 
 const LoginLink = styled(Link)`
-    color: #006494;
+    color: #A3B18A;
 `;
 
 const InputBoxes = styled.input`
-    background-color: #1b98e033;
-    color: #13293D;
+    background-color: #A3B18A;
+    color: #344E41;
     width: 325px;
     padding: 12px;
     margin: 10px 0;
@@ -83,7 +83,7 @@ const Signup = () => {
                 email
             });
             console.log("User created: ", user.uid);
-            navigate("/login")
+            navigate("/pods")
         } catch (err) {
             console.error(err.code, err.message);
         }
