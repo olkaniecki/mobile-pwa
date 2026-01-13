@@ -4,16 +4,20 @@ import styled from "styled-components";
 const Card = styled.div`
     background-color: #A3B18A;
     color: #344E41;
-    width: 370px;
-    height: 100px;
+    width: 350px;
     border-radius: 0.75rem;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-
+    padding: 10px; 
+    box-sizing: border-box;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    nn
     &:hover {
         background-color: #344E41;
         color: #A3B18A;
     }
 `;
+
 
 const PodName = styled.h3`
     margin: 0 0 8px 0;
@@ -22,6 +26,7 @@ const PodName = styled.h3`
 
 const Members = styled.p`
     margin: 0;
+    padding: 0;
     color: inherit;
 `;
 
