@@ -6,15 +6,17 @@ import { Link } from 'react-router-dom';
 import {auth, db} from '../firebase';
 import {useAuth} from "../AuthContext";
 import Pod from '../components/Pod';
+import NavigationBar from '../components/NavBar';
+import {Routes, Route} from 'react-router-dom';
 
 const PageContainer = styled.div`
-  min-height: 100vh;        
+  min-height: 100vh;   
+  max-width: 100vw;     
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: stretch;
   padding: 20px;
-  box-sizing: border-box;
-  overflow-y: auto;       
+  box-sizing: border-box;   
   overflow-x: hidden;
 `;
 
@@ -71,20 +73,19 @@ const PodHome = () => {
     if(loading) return <p>Loading...</p>;
 
     return(
-        <PageContainer>
+        <><PageContainer>
 
-                <h3>Welcome, {userData?.firstName}</h3>
-                <h1>Your Pods</h1>
+            <h3>Welcome, {userData?.firstName}</h3>
+            <h1>Your Pods</h1>
 
-                {userPods.length === 0 && (<p>You're not in any pods yet.</p>)}
+            {userPods.length === 0 && (<p>You're not in any pods yet.</p>)}
 
-                {userPods.map(pod => (
-                    <div key={pod.id}>
-                        <Pod key={pod.id} pod={pod}/>
-                    </div>
-                ))}
-
-        </PageContainer>
+            {userPods.map(pod => (
+                <div key={pod.id}>
+                    <Pod key={pod.id} pod={pod} />
+                </div>
+            ))}
+        </PageContainer><NavigationBar /></>
     );
 };
 

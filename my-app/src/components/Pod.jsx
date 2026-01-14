@@ -4,14 +4,17 @@ import styled from "styled-components";
 const Card = styled.div`
     background-color: #A3B18A;
     color: #344E41;
-    width: 350px;
+    width: 100%;
+    max-width: 420px;
     border-radius: 0.75rem;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-    padding: 10px; 
+    padding: 14px; 
     box-sizing: border-box;
     overflow-x: hidden;
     overflow-y: hidden;
-    nn
+
+    margin: 0 auto 16px;
+    
     &:hover {
         background-color: #344E41;
         color: #A3B18A;
