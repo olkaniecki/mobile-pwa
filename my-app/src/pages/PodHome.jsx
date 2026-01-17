@@ -32,8 +32,12 @@ const PodHome = () => {
     useEffect(() => {
         if (!user) return;
 
-        const fetchUser = async () => {
+        const fetchData = async () => {
             try {
+
+                console.log("Fetching user:", user.uid);
+                console.log("Fetching pods query for user:", user.uid);
+
                 const userRef = doc(db, "users", user.uid);
                 const snap = await getDoc(userRef);
 
@@ -42,32 +46,23 @@ const PodHome = () => {
                 } else {
                     console.warn("No user document found");
                 }
-            } catch (err) {
-                console.error("Error fetching user: ", err);n
-            } finally {
-                setLoading(false);
-            }
-        };
 
-        const fetchPods = async () => {
-            try {
                 const q = query(collection(db, "pods"), where("memberUID", "array-contains", user.uid));
-                const snap = await getDocs(q);
-                const results = snap.docs.map(doc => ({
+                const snapPods = await getDocs(q);
+                const results = snapPods.docs.map(doc => ({
                     id: doc.id,
                     ...doc.data()
                 }));
 
                 setUserPods(results);
             } catch (err) {
-                console.error("Error fetching pods:", err);
+                console.error("Error fetching pods/users:", err);
             } finally {
                 setLoading(false);   
             }
         };
 
-        fetchUser();
-        fetchPods();
+        fetchData();
     }, [user]);
 
     if(loading) return <p>Loading...</p>;

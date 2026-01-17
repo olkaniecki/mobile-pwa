@@ -1,7 +1,12 @@
 import React from "react";
 import styled from "styled-components";
+import {Link} from 'react-router-dom';
 
-const Card = styled.div`
+const Card = styled(Link)`
+    display: block;
+    text-decoration: none;
+
+
     background-color: #A3B18A;
     color: #344E41;
     width: 100%;
@@ -36,7 +41,7 @@ const Members = styled.p`
 const Pod = ({ pod }) => {
     
     return (
-        <Card>
+        <Card to={`/podpage/${pod.id}`}>
             <PodName>{pod.podName}</PodName>
             <Members>Members: {pod.memberUID?.length || 0}</Members>
         </Card>

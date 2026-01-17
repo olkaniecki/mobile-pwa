@@ -3,6 +3,7 @@ import Home from './pages/Home';
 import Signup from './pages/Signup';
 import Login from './pages/Login';
 import PodHome from './pages/PodHome';
+import PodPage from './pages/PodPage';
 import Notifications from './pages/Notifications';
 import Schedule from './pages/Schedule';
 import { AuthProvider } from './AuthContext';
@@ -24,6 +25,7 @@ function App() {
               <Route path="/pods" element={<PodHome/>}/>
               <Route path="/schedule" element={<Schedule/>}/>
               <Route path="/notifications" element={<Notifications/>}/>
+              <Route path="/podpage/:podId" element={<PodPage/>}/>
             </Routes>
             </section>
         </div>
