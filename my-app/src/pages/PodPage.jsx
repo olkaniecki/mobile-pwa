@@ -79,9 +79,9 @@ const PodPage = () => {
             </div>
 
             <div style={{marginTop: "2rem"}}>
-                {active === "posts" && <PodPosts pod={pod.id}/>}
-                {active === "events" && <PodEvents pod={pod.id}/>}
-                {active === "members" && <PodMembers pod={pod.id}/>}
+                {active === "posts" && <PodPosts pod={pod}/>}
+                {active === "events" && <PodEvents pod={pod}/>}
+                {active === "members" && <PodMembers pod={pod}/>}
             </div>
             <NavigationBar/>
         </PageContainer>

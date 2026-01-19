@@ -6,6 +6,7 @@ import PodHome from './pages/PodHome';
 import PodPage from './pages/PodPage';
 import Notifications from './pages/Notifications';
 import Schedule from './pages/Schedule';
+import NewPodPost from './pages/NewPodPost';
 import { AuthProvider } from './AuthContext';
 import { BrowserRouter as Router} from 'react-router-dom';
 import {Routes, Route} from 'react-router-dom';
@@ -26,6 +27,7 @@ function App() {
               <Route path="/schedule" element={<Schedule/>}/>
               <Route path="/notifications" element={<Notifications/>}/>
               <Route path="/podpage/:podId" element={<PodPage/>}/>
+              <Route path="/newpost/:podId" element={<NewPodPost/>}/>
             </Routes>
             </section>
         </div>
