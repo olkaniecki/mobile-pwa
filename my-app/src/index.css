@@ -44,7 +44,7 @@ button {
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #13293D;
+  background-color: #344E41;
   cursor: pointer;
   transition: border-color 0.25s;
 }
@@ -55,8 +55,8 @@ button:focus-visible {
 }
 
 button:active {
-    background-color: #E8F1F2;
-    color: #13293D;
+    background-color: #DAD7CD;
+    color: #344E41;
 }
 
 @media (prefers-color-scheme: light) {

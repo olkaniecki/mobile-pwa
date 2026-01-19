@@ -6,6 +6,9 @@ import {useAuth} from "../AuthContext";
 import {db} from "../firebase";
 import styled from 'styled-components';
 import NavigationBar from '../components/NavBar';
+import PodPosts from '../components/PodPosts';
+import PodEvents from '../components/PodEvents';
+import PodMembers from '../components/PodMembers';
 
 const PageContainer = styled.div`
   min-height: 100vh;        
@@ -26,6 +29,7 @@ const PodPage = () => {
     const { podId } = useParams();
     const [pod, setPod] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [active, setActive] = useState("posts");
 
     useEffect(() => {
         if (!user) return;
@@ -67,6 +71,18 @@ const PodPage = () => {
     return(
         <PageContainer>
             <h1>{pod?.podName}</h1>
+            <h3>{pod?.memberUID?.length || 0} members</h3>
+            <div style={{ display: "flex", gap: "1.5rem"}}>
+                <button onClick={() => setActive("posts")}>Posts</button>
+                <button onClick={() => setActive("events")}>Events</button>
+                <button onClick={() => setActive("members")}>Members</button>
+            </div>
+
+            <div style={{marginTop: "2rem"}}>
+                {active === "posts" && <PodPosts pod={pod.id}/>}
+                {active === "events" && <PodEvents pod={pod.id}/>}
+                {active === "members" && <PodMembers pod={pod.id}/>}
+            </div>
             <NavigationBar/>
         </PageContainer>
     );
