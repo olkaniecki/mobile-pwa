@@ -14,7 +14,7 @@ const PageContainer = styled.div`
   min-height: 100vh;        
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: stretch;
   padding: 20px;
   box-sizing: border-box;
   overflow-y: auto;       

@@ -1,19 +1,54 @@
 import React, {useEffect, useState} from 'react';
-import {doc, getDoc, collection, query, where, getDocs, onSnapshot, orderBy} from 'firebase/firestore';
+import {doc, getDoc, collection, query, where, getDocs, onSnapshot, orderBy, serverTimestamp} from 'firebase/firestore';
 import {useAuth} from "../AuthContext";
 import styled from "styled-components";
 import {Link} from 'react-router-dom';
 import {auth, db} from '../firebase';
 
-const Card = styled(Link)`
-    display: block;
+const PostsContainer = styled.div`
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+
+    overflow-x: hidden;
+`;
+
+const NewButton = styled(Link)`
+    position: fixed;
+    bottom: 70px;
+    right: 24px;
+
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background-color: #A3B18A;
+    color: #344E41;
     text-decoration: none;
 
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+
+    
+    
+    &:hover {
+        background-color: #344E41;
+        color: #A3B18A;
+    }
+`;
+
+const Post = styled(Link)`
+    display: block;
+    text-decoration: none;
 
     background-color: #A3B18A;
     color: #344E41;
     width: 100%;
-    max-width: 420px;
+    max-width: 600px;
     border-radius: 1.75rem;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
     padding: 14px; 
@@ -22,11 +57,8 @@ const Card = styled(Link)`
     overflow-y: hidden;
 
     margin: 0 auto 16px;
-    
-    &:hover {
-        background-color: #344E41;
-        color: #A3B18A;
-    }
+
+    text-align: left;
 `;
 
 const PodPosts = ({ pod }) => {
@@ -65,6 +97,17 @@ const PodPosts = ({ pod }) => {
         });
     }, [posts]); 
 
+    const timeAgo = (timestamp)  => {
+        if (!timestamp) return "Just now";
+        
+        const seconds = Math.floor((Date.now() - timestamp.toDate()) / 1000);
+        if (seconds < 60) return "Just now";
+        if (seconds < 3600) return `${Math.floor(seconds / 60)}m ago`;
+        if (seconds < 86400) return `${Math.floor(seconds / 3600)}h ago`;
+
+        return `${Math.floor(seconds / 86400)}d ago`;
+    };
+
 
     if (!pod?.id) {
         return <p>Loading pod...</p>;
@@ -75,16 +118,28 @@ const PodPosts = ({ pod }) => {
     }
 
     return(
-        <><div>
-            {posts.map(post => (
-                <div key={post.id}>
-                    <small>by {authors[post.author]?.firstName || "unknown"}</small>
-                    <p>{post.message}</p>
-                </div>
-            ))}
-        </div><Card to={`/newpost/${pod.id}`}>
-                +
-            </Card></>
+        <>
+            <PostsContainer>
+                {posts.map(post => (
+                    <div key={post.id}>
+
+                        <Post to={`/podposts/${post.id}`}>
+                            <div>
+                                <small>{authors[post.author]?.firstName} </small>
+                                <small>{authors[post.author]?.lastName}</small>
+                            </div>
+                            <small>{timeAgo(post.timePosted)} </small>
+                            <p>{post.message}</p>
+                        </Post>
+                        {/* <small>by {authors[post.author]?.firstName || "unknown"}</small>
+                <p>{post.message}</p> */}
+                    </div>
+                ))}
+            </PostsContainer>
+            <NewButton to={`/newpost/${pod.id}`}>
+                    +
+            </NewButton>
+        </>
         
     );
 };
