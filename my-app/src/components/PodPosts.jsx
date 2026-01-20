@@ -84,19 +84,6 @@ const PodPosts = ({ pod }) => {
         return () => unsub();
     }, [pod.id, user]);
 
-    useEffect(() => {
-        posts.forEach(post => {
-            if (!authors[post.author]) {
-                const userRef = doc(db, "users", post.author);
-                getDoc(userRef).then(snap => {
-                    if (snap.exists()) {
-                        setAuthors(prev => ({ ...prev, [post.author]: snap.data() }));
-                    }
-                });
-            }
-        });
-    }, [posts]); 
-
     const timeAgo = (timestamp)  => {
         if (!timestamp) return "Just now";
         
@@ -125,14 +112,11 @@ const PodPosts = ({ pod }) => {
 
                         <Post to={`/podposts/${post.id}`}>
                             <div>
-                                <small>{authors[post.author]?.firstName} </small>
-                                <small>{authors[post.author]?.lastName}</small>
+                                <small>{post.authorFirstName} {post.authorLastName}</small>
                             </div>
                             <small>{timeAgo(post.timePosted)} </small>
                             <p>{post.message}</p>
                         </Post>
-                        {/* <small>by {authors[post.author]?.firstName || "unknown"}</small>
-                <p>{post.message}</p> */}
                     </div>
                 ))}
             </PostsContainer>
